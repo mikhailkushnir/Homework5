@@ -6,6 +6,7 @@ import { api } from "./utils/api";
 import { useDebounce } from "./hooks/hooks";
 import { CatalogPage } from "./pages/CatalogPage/CatalogPage";
 import { ProductPage } from "./pages/ProductPage/ProductPage";
+import { ProfilePage } from "./pages/ProfilePage/Profile";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { filteredCards } from "./utils/utils";
 import { FavoritesPage } from "./pages/FavoritesPage/FavoritesPage";
@@ -31,7 +32,7 @@ function App() {
   const [theme, setTheme] = useState(true);
   const [modalActive, setModalActive] = useState(false);
 
-  const debounceValueInApp = useDebounce(search)
+  const debounceValueInApp = useDebounce(search);
 
   const handleProductLike = useCallback(async (product, wasLiked) => {
     const updatedCard = await api.changeProductLike(product._id, wasLiked);
@@ -135,6 +136,7 @@ try{
   console.log(error);
 }
 
+
   return (
 
     <div className={`app__${theme ? 'light' : 'dark'} `}>
@@ -152,6 +154,7 @@ try{
                   <Route path="/favorites" element={<FavoritesPage />} />
                   <Route path="/product/:id" element={<ProductPage />} >
                   </Route>
+                  <Route path="/profile" element={<ProfilePage setModalActive={setModalActive} />} />
                   {authRoutes}
                   <Route path="/stylebook" element={<AntdPage />} />
                   <Route path="*" element={<div>NOT FOUND 404</div>} />

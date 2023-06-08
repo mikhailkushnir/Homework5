@@ -9,13 +9,11 @@ export const Modal = ({ setModalActive, modalActive, children }) => {
         if (e.key === 'Escape') {
             document.removeEventListener('keydown', closeOnEsc);
             setModalActive(false);
-
         }
     }, [setModalActive])
 
     try{
         useEffect(() => {
-            const modal = document.getElementById('modal');
             document.addEventListener('keydown', closeOnEsc);
 
             return () => document.removeEventListener('keydown', closeOnEsc);

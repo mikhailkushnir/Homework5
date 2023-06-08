@@ -23,7 +23,6 @@ export const ResetPass = () => {
             }
         } else {
             try {
-                const res = await api.resetPass(data);
                 setHaveToken(true)
             } catch (error) {
                 alert('Error');

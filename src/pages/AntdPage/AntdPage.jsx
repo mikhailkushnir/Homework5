@@ -1,6 +1,6 @@
 import React from "react"
-import { Button, DatePicker, Space, version } from "antd";
-import { FastBackwardFilled, FastBackwardOutlined, HomeOutlined, StarTwoTone, MessageOutlined } from "@ant-design/icons";
+import { Button, DatePicker } from "antd";
+import { FastBackwardFilled } from "@ant-design/icons";
 import './icon.css'
 import { BaseButton } from "../../components/Button/Button";
 

@@ -7,8 +7,7 @@ import { CardsContext } from '../../context/cardContext'
 export const ProductPage = () => {
     const [product, setProduct] = useState({});
     const { id } = useParams();
-    const res = useParams();
-    const { productRating, user, handleLike } = useContext(CardsContext);
+    const { user, handleLike } = useContext(CardsContext);
 
     try{
         useEffect(() => {

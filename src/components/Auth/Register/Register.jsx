@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import { useForm } from 'react-hook-form';
 import '../index.scss'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { api } from "../../../utils/api";
 import { BaseButton } from "../../Button/Button";
 import { emailRegister, passwordRegister } from "../Login/Login";
+import { openNotification } from "../../Notification/Notification";
+
 
 export const RegisterForm = () => {
 
     const [type, setType] = useState(true)
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onBlur" });
+    const navigate = useNavigate();
 
     const sendData = async (data) => {
         try {
             const res = await api.signup(data);
+            localStorage.setItem('token', res.token);
+            navigate('/');
+            openNotification("success", "Вы успешно зарегистрировались");
         } catch (error) {
-            alert('Error');
+            openNotification("error", "Что-то пошло не так");
         }
     }
 
@@ -40,7 +46,7 @@ export const RegisterForm = () => {
                 <div>
                     <Link to={'/login'}>Я уже зарегистрирован</Link>
                 </div>
-                <BaseButton type="submit"> Зарегистрироваться  </BaseButton>
+                <BaseButton type="submit">Зарегистрироваться</BaseButton>
             </form>
         </div>
     )

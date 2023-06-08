@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from 'react-hook-form';
 import '../index.scss'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { api } from "../../../utils/api";
 import { BaseButton } from "../../Button/Button";
+import { openNotification } from "../../Notification/Notification";
 
 
 export const emailRegister = { required: 'Введите почту' }
@@ -13,29 +14,33 @@ export const passwordRegister = {
         message: 'Введите пароль'
     },
     pattern: {
-        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-        message: 'Пароль должен содержать минимум 8 символов, одну большую букву латинского алфавита и одну цифру'
+        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/,
+        message: 'Пароль должен содержать минимум 7 символов, одну большую букву латинского алфавита и одну цифру'
     }
 }
 
 
 export const LoginForm = () => {
 
-    const [type, setType] = useState(true)
+    const [type, setType] = useState(true);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onBlur" });
+    const navigate = useNavigate();
 
     const sendData = async (data) => {
         try {
             const res = await api.signin(data);
             localStorage.setItem('token', res.token);
+            navigate('/');
+            openNotification("success", "Вы авторизировались");
         } catch (error) {
-            alert('Error');
+            openNotification("error", "Неправильный логин или пароль");
         }
+
     }
 
 
     return (
-        <div className="incontent" >
+        <div className="content" >
             <h3>Login form</h3>
             <form className=" form-example" onSubmit={handleSubmit(sendData)}>
                 <div>
@@ -51,7 +56,7 @@ export const LoginForm = () => {
                     <Link className="auth__link" to={'/register'}>Регистрация</Link>
                     <Link className="auth__link" to={'/reset-pass'}>Забыли пароль?</Link>
                 </div>
-                <BaseButton type="submit">Войти </BaseButton>
+                <BaseButton type="submit">Войти</BaseButton>
             </form>
         </div>
     )
